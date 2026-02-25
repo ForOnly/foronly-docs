@@ -7,6 +7,9 @@ export default defineConfig({
   description: "foronly docs",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    search: {
+      provider: "local",
+    },
     nav: [
       { text: "Home", link: "/" },
       { text: "Docs", link: "/guide" },
@@ -28,6 +31,10 @@ export default defineConfig({
       {
         text: "MySql",
         items: [{ text: "MySql基础", link: "/mysql/MySql基础" }],
+      },
+      {
+        text: "Java",
+        items: [{ text: "Java底层基础面经", link: "/Java/Java底层基础面经" }],
       },
     ],
 
