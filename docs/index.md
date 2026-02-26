@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "foronly-docs"
-  text: "foronly docs"
-  tagline: My great project tagline
+  name: foronly-docs
+  text: 
+  tagline: 
   actions:
     - theme: brand
       text: Docs
