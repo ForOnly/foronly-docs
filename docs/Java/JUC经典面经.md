@@ -137,3 +137,47 @@ CAS（Compare And Swap），即 `比较并交换`，是一种`无锁并发控制
 ABA 问题是指在使用 CAS 时，变量值从 A 变为 B 又变回 A，CAS 无法感知中间的变化，从而误判为未修改，可能导致逻辑错误。
 在无锁数据结构（如无锁栈、队列）中可能造成严重问题，如数据丢失或结构异常。
 解决方案是引入版本号机制，例如使用 AtomicStampedReference，通过比较值和版本号来避免 ABA 问题。
+
+## AQS
+
+### 什么是 AQS？
+
+AQS 全称 AbstractQueuedSynchronizer（抽象队列同步器），它是 JUC 包中用于构建锁和同步器的基础框架。
+
+我们熟知的 ReentrantLock、CountDownLatch、Semaphore、CyclicBarrier 等同步工具，其内部实现都依赖于 AQS。
+
+AQS 使用了模板方法模式。AQS 定义了顶层逻辑（入队、出队、阻塞），而具体的“尝试获取锁”和“尝试释放锁”的逻辑由子类实现。
+
+一句话总结： AQS 是一个用来构建锁和同步器的框架，它利用一个 volatile int 变量作为共享资源（状态），并维护了一个 FIFO（先进先出）的队列来管理那些竞争资源失败的线程。
+
+AQS 的核心思想可以概括为：State + CLH 变体队列。 `同步状态 + 等待队列`
+
+1. State (同步状态)：
+
+   - 使用 volatile int state 成员变量来表示同步状态。
+   - 通过内置的 FIFO 队列来完成资源获取线程的排队工作。
+   - 通过 CAS (Compare And Swap) 操作来修改 state 的值，保证原子性。
+
+2. CLH 队列 (等待队列)：
+
+   - AQS 内部维护了一个双向链表（CLH 锁的变体）。
+   - 当线程获取同步状态失败时，AQS 会将当前线程封装成一个 Node 节点，并将其加入到队列尾部，然后阻塞该线程。
+   - 当同步状态释放时，会唤醒队列头部的后继节点，使其再次尝试获取同步状态。
+
+```mermaid
+graph LR
+    Thread[当前线程] --CAS尝试修改State--> State((state))
+    State --成功--> Owner[获取锁成功]
+    State --失败--> Queue
+
+    subgraph AQS [AbstractQueuedSynchronizer]
+        direction TB
+        State
+
+        subgraph CLH [CLH 等待队列 / 双向链表]
+            Head((Head)) <--> Node1[Node<br/>Thread A] <--> Node2[Node<br/>Thread B] <--> Tail((Tail))
+        end
+    end
+
+    Queue --封装成Node入队--> Tail
+```

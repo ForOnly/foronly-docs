@@ -33,6 +33,90 @@ layout: doc
 | 弱引用   | 只要 GC 就回收             | 不阻止      | ThreadLocal、WeakHashMap |
 | 虚引用   | 随时可能被回收             | 不影响      | 监控对象回收             |
 
+## final 能保证对象不可变吗？
+
+final 不能保证对象不可变，它只能保证变量引用不被重新赋值。
+
+如果引用指向的是可变对象，对象内部状态仍然可以改变。
+
+真正的不可变类需要类为 final、字段为 private final、没有修改方法，并对可变字段做防御性拷贝。
+
+此外，final 在 JMM 中具有特殊内存语义，可以保证初始化安全性。
+
+## final 和 volatile 区别？
+
+final 用于修饰变量不可重新赋值，并在 JMM 中保证初始化安全；
+
+volatile 用于保证多线程之间的可见性和有序性，但不保证原子性；
+
+final 更多用于不可变设计，volatile 更多用于并发控制。
+
+## String 字符串
+
+### String 为什么设计成不可变？
+
+String 设计成不可变主要有四个原因：
+
+1. 第一，保证安全性，防止在校验后被篡改；
+2. 第二，天然线程安全，可以被多个线程共享；
+3. 第三，支持字符串常量池，实现对象复用；
+4. 第四，支持 HashCode 缓存，保证作为 HashMap key 时的稳定性。
+
+因此 String 被设计为不可变类。
+
+### 字符串常量池在什么位置？
+
+> 总结：
+> 字符串常量池在 JDK6 及之前位于方法区中的永久代；
+>
+> 从 JDK7 开始，字符串常量池被移到了堆中；
+>
+> JDK8 移除了永久代，使用元空间，但字符串常量池仍然在堆中。
+>
+> 之所以迁移到堆，是为了避免永久代 OOM，并提升垃圾回收效率。
+
+### JDK9 为什么从 char[] 变成 byte[]？
+
+JDK9 将 String 底层从 char[] 改为 byte[]，引入 coder 字段实现 Compact Strings 优化。
+
+如果字符串是 Latin1 字符，则使用 1 字节存储；否则使用 UTF16 两字节存储。
+
+这样可以在大量英文场景下节省约 50% 内存空间，同时几乎不影响性能。
+
+### String、StringBuilder、StringBuffer
+
+1. String
+
+   - 每次拼接都会创建新对象（性能低）
+   - 旧对象不会改变（不可变）
+   - 线程安全
+   - 有缓存机制（字符串常量池）
+
+2. StringBuffer
+
+   - 可变
+   - 线程安全（方法加了 synchronized）
+   - 性能较低
+   - 适用于：多线程下进行字符串拼接
+
+3. StringBuilder
+   - 可变
+   - 线程不安全（底层实现和 StringBuffer 基本一致，未加 synchronized）
+   - 性能最高
+   - 适用于：单线程字符串拼接
+
+> 总结：
+>
+> StringBuilder 和 StringBuffer 都继承自 AbstractStringBuilder
+>
+> String 是不可变类，底层使用 final 数组实现，线程安全但频繁拼接性能较差。
+>
+> StringBuffer 是可变字符串，方法加了 synchronized，线程安全但性能较低。
+>
+> StringBuilder 是可变字符串，不加锁，线程不安全但性能最高。
+>
+> 单线程拼接使用 StringBuilder，多线程使用 StringBuffer，普通字符串定义使用 String。
+
 ## HashCode
 
 ### HashCode 为什么使用 31 作为乘数？
