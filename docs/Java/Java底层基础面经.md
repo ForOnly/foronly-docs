@@ -1,3 +1,11 @@
+---
+title: Java 底层基础面经
+date: 2026-02-27
+description: Java 底层基础面经
+outline: deep
+layout: doc
+---
+
 # Java 底层基础面经
 
 ## Java 是值传递还是引用传递
@@ -191,6 +199,14 @@ ConcurrentHashMap 是一个线程安全的高并发 Hash 容器。
 > **面试总结版回答：**
 > ConcurrentHashMap 是线程安全的高并发容器。JDK7 采用分段锁实现，JDK8 改为 CAS + synchronized 的桶级锁实现。它通过无锁读、细粒度锁和分段计数提高并发性能，同时不允许 null 来避免并发歧义。扩容支持多线程协助迁移，并在链表长度达到 8 时进行树化优化。
 
+### ConcurrentHashMap 如何保证操作的线程安全？
+
+JDK1.7 采用 Segment 分段锁，每个 Segment 继承 ReentrantLock，实现锁分离。
+
+JDK1.8 取消 Segment，采用 CAS + synchronized + volatile 实现线程安全。
+读操作无锁，写操作在空桶时使用 CAS，在冲突时锁定当前桶节点。
+扩容时采用多线程协助迁移，提高并发性能。
+
 ### ConcurrentHashMap 在 Jdk7 和 Jdk8 的实现区别？
 
 JDK7 的 ConcurrentHashMap 采用 Segment 分段锁机制，将数据分成多个段，每段使用 ReentrantLock 控制并发，默认最大并发度为 16。
@@ -268,7 +284,7 @@ JDK8 的扩容是：`无全局锁 + 桶级别迁移 + 多线程协作`
 
 ## ThreadLocal 的底层原理，内存泄漏的原因和解决方案？
 
-ThreadLocal 用于实现线程隔离，每个线程内部维护一个 ThreadLocalMap，数据实际存储在线程对象中。ThreadLocalMap 的 key 是 ThreadLocal 的弱引用，value 是强引用。
+`ThreadLocal 用于实现线程隔离`，每个线程内部维护一个 ThreadLocalMap，数据实际存储在线程对象中。ThreadLocalMap 的 key 是 ThreadLocal 的弱引用，value 是强引用。
 
 当 ThreadLocal 被回收但线程未结束时，key 会变为 null，而 value 仍然被强引用，可能导致内存泄漏。
 
