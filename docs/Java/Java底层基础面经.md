@@ -117,6 +117,90 @@ JDK9 将 String 底层从 char[] 改为 byte[]，引入 coder 字段实现 Compa
 >
 > 单线程拼接使用 StringBuilder，多线程使用 StringBuffer，普通字符串定义使用 String。
 
+## List
+
+List 是有序、可重复的集合接口，常见实现有 ArrayList、LinkedList 和 Vector。
+
+ArrayList 底层是动态数组，查询快，插入删除慢。
+
+LinkedList 是双向链表，插入删除相对灵活，但查询慢。
+
+扩容机制是 1.5 倍扩容。
+
+默认线程不安全，可以使用 CopyOnWriteArrayList 实现线程安全。
+
+迭代时存在 fail-fast 机制，通过 modCount 实现。
+
+### List 有哪些常见实现类？
+
+Java 中 List 的常见实现类有：
+
+- ArrayList
+- LinkedList
+- Verctor
+
+### ArrayList 和 LinkedList 区别？
+
+- ArrayList 的底层结构是动态数组，而 LinkedList 的底层结构是双向链表
+- 因为底层结构的不同，它们的使用场景也不同，ArrayList 支持随机访问，适合查询多的场景，而 LinkedList 适合插入删除多的场景
+
+### ArrayList 的扩容机制？
+
+- 1.5 倍扩容（减少扩容次数，避免空间浪费过大）
+- 扩容时先创建一个新的数组，将老数组的数据复制到新数组，然后指向新数组。
+
+### ArrayList 线程安全吗？
+
+ArrayList 是线程不安全的，它的相关操作没有使用任何同步机制（synchronized）,因此当多线程进行插入时会导致：
+
+- 数据覆盖
+- 数组越界
+- size 不准确
+
+解决方案：
+
+- 使用 CopyOnWriteArrayList
+- 使用 Java 集合工具类提供的 Collections.synchronizedList
+
+### CopyOnWriteArrayList 原理？
+
+核心思想： 写时复制
+
+具体步骤：
+
+1. 加锁
+2. 复制新数组
+3. 修改新数组
+4. 替换引用
+5. 读时不加锁，读的是旧数组
+
+这样的设计使 CopyOnWriteArrayList 的读性能高，且读写分离，适合读多写少的场景，缺点就是内存占用大，写性能差
+
+### Vector 和 ArrayList 区别？
+
+Vector 的所有操作的加了 synchronized，是线程安全的，但这也导致它的性能较差，扩容时是 2 倍扩容。
+ArrayList 是线程不安全的，性能较高，扩容时是 1.5 倍扩容
+
+### List 和 Set 的区别？
+
+List 是有序的，可重复，有索引。
+
+Set 是无序的，不可重复，无索引。
+
+### List 的 fail-fast 机制？
+
+Java 集合在迭代过程中如果检测到结构或集合大小被修改，会通过比较 modCount 和 expectedModCount 抛出 ConcurrentModificationException。这种机制叫 fail-fast。
+
+每次结构修改都会使 modCount++，而迭代器在创建时保存 expectedModCount，每次 next() 时都会检查是否一致。
+
+它不是线程安全机制，只是一种错误检测机制。
+
+HashMap 也有 fail-fast
+
+所有基于 AbstractList / AbstractMap 的集合都有 modCount
+
+解决方案： 可以使用迭代器或者改用 CopyOnWriteArrayList（读写分离）
+
 ## HashCode
 
 ### HashCode 为什么使用 31 作为乘数？
