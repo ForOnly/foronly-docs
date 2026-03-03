@@ -23,7 +23,7 @@
 
 ✅ 示例：
 
-```Bashdatabase-index-optimization.mdgetting-started.mdapi-authentication.md
+```text
 Bashdatabase-index-optimization.mdgetting-started.mdapi-authentication.md
 ```
 
