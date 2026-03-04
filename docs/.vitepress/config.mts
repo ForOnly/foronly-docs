@@ -58,11 +58,28 @@ export default defineConfig({
           { text: "Java底层基础面经", link: "/Java/Java底层基础面经" },
           { text: "Java线程池", link: "/Java/Java线程池" },
           { text: "JUC经典面经", link: "/Java/JUC经典面经" },
+          { text: "JVM经典面经", link: "/Java/JVM经典面经" },
         ],
       },
       {
         text: "MySql",
         items: [{ text: "MySql基础", link: "/mysql/MySql基础" }],
+      },
+      {
+        text: "Redis",
+        items: [
+          { text: "redis基础", link: "/redis/redis基础" },
+          { text: "redis业务场景", link: "/redis/redis业务场景" },
+        ],
+      },
+      {
+        text: "SpringBoot",
+        items: [
+          {
+            text: "springboot经典面经",
+            link: "/springboot/springboot经典面经",
+          },
+        ],
       },
     ],
 

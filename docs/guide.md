@@ -131,9 +131,8 @@ def query_user(user_id: int) -&gt; dict:
     return database.get(user_id)
 ```
 
-```
-
-SELECT \* FROM user;
+```sql
+SELECT * FROM user;
 ```
 
 ### 2️⃣ 代码规范要求
@@ -205,8 +204,6 @@ VitePress 支持：
 mermaidgraph TD A[客户端] --&gt; B[服务器]`
 Markdown`mermaidgraph TD A[客户端] --&gt; B[服务器]```
 
-````
-
 ## 九、提交规范
 
 ### 1️⃣ Commit Message 规范
@@ -217,7 +214,7 @@ Markdown`mermaidgraph TD A[客户端] --&gt; B[服务器]```
 
 格式：
 
-```
+```text
 代码docs: 描述
 ```
 
@@ -256,4 +253,3 @@ Markdown`mermaidgraph TD A[客户端] --&gt; B[服务器]```
 - 等宽字体：JetBrains Mono
 - 开启代码块行号
 - 控制行宽 <= 80ch
-````
