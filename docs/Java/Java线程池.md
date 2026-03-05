@@ -184,3 +184,28 @@ Executors 提供的 4 种常见线程池：
 > Fixed 使用无界队列，线程数固定；Cached 使用 SynchronousQueue，线程数可无限扩展；Single 是单线程串行执行；Scheduled 支持定时任务。
 >
 > 由于部分线程池使用无界队列或无限线程数，存在 OOM 风险，因此生产环境推荐直接使用 ThreadPoolExecutor 自定义参数。
+
+## 线程池任务提交机制中 execute 和 submit 有什么区别？
+
+1. execute
+
+   - 无返回值
+   - 直接抛出异常
+   - Runnable 任务类型
+   - 不可获取结果
+
+2. submit
+   - 有返回值
+   - 异常被 Future 捕获
+   - Runnable 或 Callable 任务类型
+   - 可以获取结果
+
+> execute() 和 submit() 都是线程池提交任务的方法。
+>
+> 第一，execute() 没有返回值，而 submit() 会返回一个 Future 对象，可以用于获取任务执行结果。
+>
+> 第二，execute() 提交任务发生异常时会直接抛出，而 submit() 的异常会被封装在 Future 中，只有在调用 get() 时才会抛出。
+>
+> 第三，execute() 只能提交 Runnable 任务，而 submit() 可以提交 Runnable 和 Callable。
+>
+> 第四，从底层实现来看，submit() 内部会将任务封装成 FutureTask，然后再调用 execute() 方法执行。

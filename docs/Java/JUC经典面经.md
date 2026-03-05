@@ -17,6 +17,44 @@ JUC = java.util.concurrent
 4. 并发容器
 5. AQS 核心框架
 
+## 线程
+
+### 创建线程方式？
+
+1. 继承 Thread，重写 run 方法
+2. 实现 Runable，通过 new Thread(runable)方式创建
+3. 实现 Callable ，创建 FutureTask，通过 new Thread(futureTask)方式创建
+4. 使用线程池
+
+### Callable 和 Runnable 创建线程的方式有什么区别？
+
+1. Runnable
+
+   - 无返回值
+   - 不可抛异常
+   - 实现 run 方法
+
+2. Callable
+
+   - 有返回值
+   - 可抛异常
+   - 实现 call 方法
+
+### start 和 run 区别？
+
+start() 和 run() 的核心区别在于 是否真正创建新线程。
+
+1. run() 方法：run() 是 Thread 类实现 Runnable 接口后的一个普通方法。本质上只是一次普通的方法调用，仍然在当前线程中执行，并不会创建新的线程。
+
+2. start() 方法：start() 才是启动线程的入口方法，调用 start() 后：
+
+   - JVM 会调用 start() 内部的 native 方法
+   - 由 操作系统创建新的线程
+   - 线程进入 RUNNABLE 状态
+   - JVM 线程调度器最终会执行该线程的 run() 方法
+   - `start() -> 创建新线程 -> JVM 调度 -> 执行 run()`
+   - 不能多次调用 start()，会抛异常`IllegalThreadStateException`
+
 ## volatile
 
 volatile 通过内存屏障机制保证可见性和有序性，但不保证复合操作的原子性，适用于状态标志位和双重检查锁等场景。
@@ -130,13 +168,13 @@ Mark Word 会根据锁状态存储不同信息：
 
 ### CAS 是什么？ CAS 原理？
 
-CAS（Compare And Swap），即 `比较并交换`，是一种`无锁并发控制机制`。在更新变量时，先比较当前值是否等于预期值，如果相等则更新，否则不更新。是一种`乐观锁机制`
+CAS（Compare And Swap）是一种`无锁并发机制`，它通过 CPU 提供的原子指令（如 cmpxchg）实现比较并交换操作。CAS 会比较内存中的值和期望值，如果相同则更新为新值，否则操作失败。由于`整个比较和更新过程是 CPU 保证的原子操作`，因此可以在多线程环境下保证线程安全。Java 中的 Atomic 类（如 AtomicInteger）就是通过 Unsafe 或 VarHandle 调用底层 CAS 指令实现的。不过 CAS 也存在 `ABA 问题`、`自旋开销大`以及`只能保证单变量原子性`等缺点。
 
 ### 理解 ABA 问题？
 
 ABA 问题是指在使用 CAS 时，变量值从 A 变为 B 又变回 A，CAS 无法感知中间的变化，从而误判为未修改，可能导致逻辑错误。
 在无锁数据结构（如无锁栈、队列）中可能造成严重问题，如数据丢失或结构异常。
-解决方案是引入版本号机制，例如使用 AtomicStampedReference，通过比较值和版本号来避免 ABA 问题。
+解决方案是引入版本号机制，例如使用 `AtomicStampedReference`，通过比较值和版本号来避免 ABA 问题。
 
 ## AQS
 

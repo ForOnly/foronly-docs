@@ -208,14 +208,14 @@ Markdown`mermaidgraph TD A[客户端] --&gt; B[服务器]```
 
 ### 1️⃣ Commit Message 规范
 
-```代码docs: 新增 MySQL 索引回表说明docs: 修复 API 认证章节错误docs: 优化 Redis 部分结构
-代码docs: 新增 MySQL 索引回表说明docs: 修复 API 认证章节错误docs: 优化 Redis 部分结构
+```text
+docs: 新增 MySQL 索引回表说明docs: 修复 API 认证章节错误docs: 优化 Redis 部分结构
 ```
 
 格式：
 
 ```text
-代码docs: 描述
+docs: 描述
 ```
 
 ### 2️⃣ PR 要求
