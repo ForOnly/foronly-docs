@@ -51,9 +51,10 @@ features:
 }
 
 /* 简单的图片浮动动画 */
-.VPHero .image-src {
+.VPHero .image-container {
+  display: block;
+  margin: 0 auto;
   animation: float 5s ease-in-out infinite;
-  max-height: 220px;
 }
 
 @keyframes float {

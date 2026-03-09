@@ -26,6 +26,45 @@ JUC = java.util.concurrent
 3. 实现 Callable ，创建 FutureTask，通过 new Thread(futureTask)方式创建
 4. 使用线程池
 
+### Java 线程的运行流程（生命周期）是怎样的？
+
+在 Java 中，线程的生命周期由 Thread.State 枚举定义，一共有 六种状态：
+
+1. new:线程对象被创建，但还没有调用 start() 方法。
+2. runnable:当调用 start() 方法后，线程进入 RUNNABLE 状态。RUNNABLE 状态实际上包含两个操作系统状态：Ready（就绪）和 Running（运行）
+3. blocked：尝试获取锁失败时进入 BLOCKED 状态。
+4. waiting：线程主动进入等待状态，需要 其他线程唤醒。
+5. timed_waiting：超时等待
+6. terminated：线程生命周期结束，不能再次启动。
+
+线程生命周期转换图:
+
+```text
+NEW
+  │
+start()
+  │
+RUNNABLE
+  │
+  ├─获取锁失败 → BLOCKED
+  │
+  ├─wait/join → WAITING
+  │
+  ├─sleep → TIMED_WAITING
+  │
+  ↓
+TERMINATED
+```
+
+### join 和 wait 的区别？
+
+join() 和 wait() 都可以让线程进入等待状态
+
+1. join 是当前挂起等待调用 join 的线程结束，wait 是等待某个线程唤醒
+2. wait 必须在 synchronized 块中调用，join 没有限制
+3. wait 是 Object 的方法，join 是 Thread 的方法
+4. wait 需要通过 notify 或者 notifyAll 才能唤醒，join 在结束后自动唤醒
+
 ### Callable 和 Runnable 创建线程的方式有什么区别？
 
 1. Runnable
@@ -54,6 +93,39 @@ start() 和 run() 的核心区别在于 是否真正创建新线程。
    - JVM 线程调度器最终会执行该线程的 run() 方法
    - `start() -> 创建新线程 -> JVM 调度 -> 执行 run()`
    - 不能多次调用 start()，会抛异常`IllegalThreadStateException`
+
+### sleep 和 wait 区别？
+
+sleep() 和 wait() 都可以让线程进入阻塞状态，它们的区别在于：
+
+1. 所属类不同：
+
+   - sleep() 是 Thread 类的静态方法
+   - wait() 是 Object 类的方法，因此任何对象都可以调用 wait()
+
+2. 是否释放锁：
+
+   - sleep() 在阻塞期间 不会释放锁
+   - wait() 在调用后会 释放当前对象锁，并让线程进入等待队列
+
+3. 使用条件不同
+
+   - sleep() 可以在任何地方调用，不需要同步环境
+   - wait() 必须在 `synchronized 同步代码块`或`同步方法中`调用，否则会抛出 IllegalMonitorStateException
+
+4. 唤醒方式不同
+
+   - sleep() 在指定时间结束后会 自动恢复运行
+   - wait() 需要其他线程调用：`notify()`或者`notifyAll()`才能被唤醒，唤醒后线程需要重新竞争锁才能继续执行。
+
+### notify 和 notifyAll 区别？
+
+notify() 和 notifyAll() 都是 Object 类提供的线程通信方法，用于唤醒调用 wait() 进入等待状态的线程，它们必须在 synchronized 同步代码块或同步方法中调用。
+
+二者的核心区别主要体现在 唤醒线程数量不同。
+
+1. notify() 会从当前对象的 等待队列（Wait Set）中`随机唤醒一个线程`。
+2. notifyAll() 会`唤醒等待队列中的所有线程`。这些线程会全部进入锁竞争状态，但最终只有一个线程能获得锁，其余线程依旧会被阻塞
 
 ## volatile
 
@@ -102,6 +174,20 @@ synchronized 是重量级锁
 否则必须加锁。
 
 ## synchronized
+
+### synchronized 底层原理？
+
+synchronized 是 Java 提供的 内置锁机制，它的底层是通过 对象监视器（Monitor）机制实现的。
+
+在字节码层面，synchronized 会被编译成两条 JVM 指令：`monitorenter`和`monitorexit`。
+
+当线程进入 synchronized 代码块时，会执行 monitorenter 指令去尝试获取对象的 Monitor 锁，如果获取成功就进入临界区执行代码；执行完成或发生异常时，会执行 monitorexit 释放锁。
+
+synchronized 的锁信息存储在 对象头（Object Header）中的 `Mark Word` 中。
+
+synchronized 还通过`内存屏障（Memory Barrier）`保证：`可见性`和`有序性`
+
+`synchronized 的底层 = Monitor机制 + 对象头Mark Word + 锁升级优化 + 内存屏障保证可见性。`
 
 ### synchronized 锁升级流程?
 
