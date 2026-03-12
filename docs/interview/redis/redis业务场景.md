@@ -1,3 +1,11 @@
+---
+title: Redis 业务场景
+date: 2026-03-12
+description: Redis 业务场景
+outline: deep
+layout: doc
+---
+
 # Redis 业务场景
 
 ## redis 在项目中的应用场景有哪些？

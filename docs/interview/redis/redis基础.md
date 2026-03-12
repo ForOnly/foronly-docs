@@ -1,3 +1,11 @@
+---
+title: Redis 基础
+date: 2026-03-12
+description: Redis 基础
+outline: deep
+layout: doc
+---
+
 # Redis 基础
 
 ## Redis 为什么这么快？

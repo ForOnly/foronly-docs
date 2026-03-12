@@ -1,3 +1,11 @@
+---
+title: MySQL 基础
+date: 2026-03-12
+description: MySQL 基础
+outline: deep
+layout: doc
+---
+
 # MySql 基础
 
 ## MySql 基础

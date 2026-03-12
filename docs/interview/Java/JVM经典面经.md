@@ -1,3 +1,11 @@
+---
+title: JVM 经典面经
+date: 2026-03-12
+description: JVM 经典面经
+outline: deep
+layout: doc
+---
+
 # JVM 经典面经
 
 ## 类加载过程？

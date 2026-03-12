@@ -1,25 +1,53 @@
 import { defineConfig } from "vitepress";
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from "vitepress-plugin-group-icons";
 import { pagefindPlugin } from "vitepress-plugin-pagefind";
 
+import nav from "./configs/nav";
+import sidebar from "./configs/sidebar";
 function chineseSearchOptimize(input: string) {
-  const segmenter = new Intl.Segmenter("zh-CN", { granularity: "word" });
-  const result: string[] = [];
-  for (const it of segmenter.segment(input)) {
-    if (it.isWordLike) {
-      result.push(it.segment);
+  const segmenter = new Intl.Segmenter("zh-CN", {
+    granularity: "word",
+  });
+
+  const words: string[] = [];
+
+  for (const { segment, isWordLike } of segmenter.segment(input)) {
+    if (isWordLike) {
+      words.push(segment);
     }
   }
-  return result.join(" ");
+
+  return words.join(" ");
 }
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   base: "/foronly-docs/",
-  title: "foronly-docs",
+  title: "当雨落街头",
+  head: [["link", { rel: "icon", href: "/foronly-docs/favicon.ico" }]],
   description: "",
+  cleanUrls: true,
   lastUpdated: true,
+  markdown: {
+    config(md) {
+      md.use(groupIconMdPlugin);
+      md.renderer.rules.heading_close = (tokens, idx, options, env, slf) => {
+        let htmlResult = slf.renderToken(tokens, idx, options);
+        if (tokens[idx].tag === "h1") htmlResult += `<ArticleMetadata />`;
+        return htmlResult;
+      };
+    },
+    lineNumbers: true,
+    image: {
+      lazyLoading: true,
+    },
+  },
   vite: {
     plugins: [
+      groupIconVitePlugin(),
       pagefindPlugin({
         btnPlaceholder: "搜索",
         placeholder: "搜索文档",
@@ -31,60 +59,38 @@ export default defineConfig({
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    search: {
-      provider: "local",
+    logo: "/logo/head_logo.png",
+    lastUpdated: {
+      text: "最后更新于",
+      formatOptions: {
+        dateStyle: "short",
+        timeStyle: "medium",
+      },
     },
-    nav: [
-      { text: "Home", link: "/" },
-      { text: "Docs", link: "/guide" },
-      // { text: "Examples", link: "/markdown-examples" },
-    ],
-
-    sidebar: [
-      {
-        text: "Guide",
-        items: [{ text: "文档指南", link: "/guide" }],
-      },
-      // {
-      //   text: "Examples",
-      //   items: [
-      //     { text: "Markdown Examples", link: "/markdown-examples" },
-      //     { text: "Runtime API Examples", link: "/api-examples" },
-      //   ],
-      // },
-      {
-        text: "Java",
-        items: [
-          { text: "Java底层基础面经", link: "/Java/Java底层基础面经" },
-          { text: "Java线程池", link: "/Java/Java线程池" },
-          { text: "JUC经典面经", link: "/Java/JUC经典面经" },
-          { text: "JVM经典面经", link: "/Java/JVM经典面经" },
-        ],
-      },
-      {
-        text: "MySql",
-        items: [{ text: "MySql基础", link: "/mysql/MySql基础" }],
-      },
-      {
-        text: "Redis",
-        items: [
-          { text: "redis基础", link: "/redis/redis基础" },
-          { text: "redis业务场景", link: "/redis/redis业务场景" },
-        ],
-      },
-      {
-        text: "SpringBoot",
-        items: [
-          {
-            text: "springboot经典面经",
-            link: "/springboot/springboot经典面经",
-          },
-        ],
-      },
-    ],
-
+    // search: {
+    //   provider: "local",
+    // },
+    outline: {
+      level: "deep",
+      label: "目录",
+    },
+    nav,
+    sidebar,
     socialLinks: [
       { icon: "github", link: "https://github.com/ForOnly/foronly-docs" },
     ],
+    docFooter: {
+      prev: "上一篇",
+      next: "下一篇",
+    },
+    returnToTopLabel: "回到顶部",
+    sidebarMenuLabel: "菜单",
+    darkModeSwitchLabel: "主题",
+    lightModeSwitchTitle: "切换到浅色模式",
+    darkModeSwitchTitle: "切换到深色模式",
+    footer: {
+      message: "如有转载或 CV 的请标注本站原文地址",
+      copyright: "Copyright © 2026 foronly",
+    },
   },
 });
