@@ -20,7 +20,7 @@ hero:
 
   image:
     src: /logo/head_logo.png # 请确保 docs/public/logo.png 存在，若无图可暂时注释掉
-    alt: head_logo
+    alt: avatar
 
 features:
   - title: 📖 文档指南

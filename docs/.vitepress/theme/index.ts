@@ -1,6 +1,7 @@
 // .vitepress/theme/index.ts
 import type { EnhanceAppContext } from "vitepress";
-import DefaultTheme from "vitepress/theme";
+// import DefaultTheme from "vitepress/theme";
+import DefaultTheme from "vitepress/theme-without-fonts";
 
 import mediumZoom from "medium-zoom";
 import "virtual:group-icons.css";

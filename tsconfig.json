@@ -14,9 +14,9 @@
   },
   "include": [
     "env.d.ts",
-    ".vitepress/**/*.ts",
-    ".vitepress/**/*.vue",
-    "**/*.ts",
-    "**/*.d.ts"
+    "docs/.vitepress/**/*.ts",
+    "docs/.vitepress/**/*.d.ts",
+    "docs/**/*.ts",
+    "docs/**/*.d.ts"
   ]
 }

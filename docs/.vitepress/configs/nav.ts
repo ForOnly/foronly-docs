@@ -19,26 +19,30 @@ const nav: DefaultTheme.Config["nav"] = [
         ],
       },
       {
-      text: "MySQL",
-      items: [{ text: "MySQL基础", link: "/interview/mysql/MySql基础" }],
-    },
-    {
-      text: "Redis",
-      items: [
-        { text: "redis基础", link: "/interview/redis/redis基础" },
-        { text: "redis业务场景", link: "/interview/redis/redis业务场景" },
-      ],
-    },
-    {
-      text: "SpringBoot",
-      items: [
-        {
-          text: "springboot经典面经",
-          link: "/interview/springboot/springboot经典面经",
-        },
-      ],
-    },
+        text: "MySQL",
+        items: [{ text: "MySQL基础", link: "/interview/mysql/MySql基础" }],
+      },
+      {
+        text: "Redis",
+        items: [
+          { text: "redis基础", link: "/interview/redis/redis基础" },
+          { text: "redis业务场景", link: "/interview/redis/redis业务场景" },
+        ],
+      },
+      {
+        text: "SpringBoot",
+        items: [
+          {
+            text: "springboot经典面经",
+            link: "/interview/springboot/springboot经典面经",
+          },
+        ],
+      },
     ],
+  },
+  {
+    text: "关于我",
+    items: [{ text: "Github", link: "https://github.com/ForOnly" }],
   },
 ];
 
