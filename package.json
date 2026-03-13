@@ -12,8 +12,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
     "pagefind": "^1.4.0",
     "sass": "^1.98.0",
+    "tailwindcss": "^4.2.1",
     "vitepress": "^1.6.4",
     "vitepress-plugin-nprogress": "^0.1.1",
     "vitepress-plugin-pagefind": "^0.4.18",

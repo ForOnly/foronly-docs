@@ -1,11 +1,3 @@
+@use "./style/font.scss";
 @use "./style/medium-zoom.scss";
-
-:root {
-  /* 调整 Hero 标题的渐变色，配合 Java 主题通常用 橙/红/紫 或 蓝/青 */
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(
-    120deg,
-    #ff4b2b 30%,
-    #ff416c
-  );
-}
+@use "./style/var.scss";

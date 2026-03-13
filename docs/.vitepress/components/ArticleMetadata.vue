@@ -48,7 +48,7 @@ onMounted(() => {
 
 <template>
   <div class="word">
-    <p>
+    <p  class="inline-flex items-center gap-1.5">
       <svg
         t="1724572866572"
         class="icon"

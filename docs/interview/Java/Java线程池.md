@@ -24,7 +24,7 @@ ThreadPoolExecutor
 
 构造方法：
 
-```java
+```java[java]
 public ThreadPoolExecutor(
     int corePoolSize, // 核心线程数
     int maximumPoolSize, // 最大线程数（workQueue 是有界队列时才会生效）

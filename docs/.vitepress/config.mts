@@ -7,6 +7,7 @@ import { pagefindPlugin } from "vitepress-plugin-pagefind";
 
 import nav from "./configs/nav";
 import sidebar from "./configs/sidebar";
+import Tailwind from '@tailwindcss/vite'
 function chineseSearchOptimize(input: string) {
   const segmenter = new Intl.Segmenter("zh-CN", {
     granularity: "word",
@@ -47,6 +48,7 @@ export default defineConfig({
   },
   vite: {
     plugins: [
+      Tailwind(),
       groupIconVitePlugin(),
       pagefindPlugin({
         btnPlaceholder: "搜索",

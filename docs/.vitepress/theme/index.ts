@@ -11,6 +11,7 @@ import "vitepress-plugin-nprogress/lib/css/index.css";
 import { nextTick, onMounted, watch } from "vue";
 import components from "../components/index";
 import "./index.scss";
+import "./tailwind.css";
 export default {
   ...DefaultTheme,
   enhanceApp: (ctx: EnhanceAppContext) => {
@@ -34,5 +35,12 @@ export default {
       () => route.path,
       () => nextTick(() => initZoom())
     );
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: "modern",
+      },
+    },
   },
 };
