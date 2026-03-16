@@ -14,8 +14,8 @@ const nav: DefaultTheme.Config["nav"] = [
             link: "/interview/Java/Java底层基础面经",
           },
           { text: "Java线程池", link: "/interview/Java/Java线程池" },
-          { text: "JVM经典面经", link: "/interview/Java/JVM经典面经" },
           { text: "JUC经典面经", link: "/interview/Java/JUC经典面经" },
+          { text: "JVM经典面经", link: "/interview/Java/JVM经典面经" },
         ],
       },
       {
@@ -38,8 +38,13 @@ const nav: DefaultTheme.Config["nav"] = [
           },
         ],
       },
+      {
+        text: "数据结构",
+        items: [{ text: "树", link: "/interview/data_structure/tree" }],
+      },
     ],
   },
+
   {
     text: "关于我",
     items: [{ text: "Github", link: "https://github.com/ForOnly" }],

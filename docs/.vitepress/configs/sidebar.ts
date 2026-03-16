@@ -9,13 +9,6 @@ const sidebar: DefaultTheme.Config["sidebar"] = {
   ],
 
   "/interview/": [
-    // {
-    //   text: "Examples",
-    //   items: [
-    //     { text: "Markdown Examples", link: "/markdown-examples" },
-    //     { text: "Runtime API Examples", link: "/api-examples" },
-    //   ],
-    // },
     {
       text: "Java",
       items: [
@@ -44,6 +37,10 @@ const sidebar: DefaultTheme.Config["sidebar"] = {
           link: "/interview/springboot/springboot经典面经",
         },
       ],
+    },
+    {
+      text: "数据结构",
+      items: [{ text: "树", link: "/interview/data_structure/tree" }],
     },
   ],
 };
