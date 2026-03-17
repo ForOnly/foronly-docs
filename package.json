@@ -13,6 +13,9 @@
   "license": "ISC",
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.1",
+    "markdown-it": "^14.1.1",
+    "markdown-it-footnote": "^4.0.0",
+    "markdown-it-mathjax3": "^4.3.2",
     "pagefind": "^1.4.0",
     "sass": "^1.98.0",
     "tailwindcss": "^4.2.1",

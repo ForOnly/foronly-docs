@@ -1,13 +1,13 @@
+import Tailwind from "@tailwindcss/vite";
 import { defineConfig } from "vitepress";
 import {
   groupIconMdPlugin,
   groupIconVitePlugin,
 } from "vitepress-plugin-group-icons";
 import { pagefindPlugin } from "vitepress-plugin-pagefind";
-
 import nav from "./configs/nav";
 import sidebar from "./configs/sidebar";
-import Tailwind from '@tailwindcss/vite'
+// import autoAnchorPlugin from "./utils/autoAnchorPlugin";
 function chineseSearchOptimize(input: string) {
   const segmenter = new Intl.Segmenter("zh-CN", {
     granularity: "word",
@@ -34,6 +34,7 @@ export default defineConfig({
   lastUpdated: true,
   markdown: {
     config(md) {
+      // md.use(autoAnchorPlugin);
       md.use(groupIconMdPlugin);
       md.renderer.rules.heading_close = (tokens, idx, options, env, slf) => {
         let htmlResult = slf.renderToken(tokens, idx, options);
