@@ -47,7 +47,10 @@ const nav: DefaultTheme.Config["nav"] = [
 
   {
     text: "关于我",
-    items: [{ text: "Github", link: "https://github.com/ForOnly" }],
+    items: [
+      { text: "Github", link: "https://github.com/ForOnly" },
+      { text: "更新日志", link: "/changelog/changelog" },
+    ],
   },
 ];
 

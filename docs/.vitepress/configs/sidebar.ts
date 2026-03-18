@@ -7,6 +7,12 @@ const sidebar: DefaultTheme.Config["sidebar"] = {
       items: [{ text: "文档指南", link: "/guide/guide" }],
     },
   ],
+  "/changelog/": [
+    {
+      text: "更新日志",
+      items: [{ text: "更新日志", link: "/changelog/changelog" }],
+    },
+  ],
 
   "/interview/": [
     {
