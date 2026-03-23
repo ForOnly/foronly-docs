@@ -1,9 +1,9 @@
 import Tailwind from "@tailwindcss/vite";
-import { defineConfig } from "vitepress";
 import {
   groupIconMdPlugin,
   groupIconVitePlugin,
 } from "vitepress-plugin-group-icons";
+import { withMermaid } from "vitepress-plugin-mermaid";
 import { pagefindPlugin } from "vitepress-plugin-pagefind";
 import nav from "./configs/nav";
 import sidebar from "./configs/sidebar";
@@ -25,13 +25,24 @@ function chineseSearchOptimize(input: string) {
 }
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default withMermaid({
   base: "/foronly-docs/",
   title: "当雨落街头",
   head: [["link", { rel: "icon", href: "/foronly-docs/favicon.ico" }]],
   description: "",
   cleanUrls: true,
   lastUpdated: true,
+  mermaid: {
+    fontSize: 18,
+    // 更多配置查看： https://mermaid.js.org/intro/syntax-reference.html
+    theme: "forest",
+    look: "handDrawn",
+    layout: "elk",
+    elk: {
+      mergeEdges: true,
+      nodePlacementStrategy: "LINEAR_SEGMENTS",
+    },
+  },
   markdown: {
     config(md) {
       // md.use(autoAnchorPlugin);

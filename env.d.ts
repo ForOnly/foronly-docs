@@ -1,2 +1,10 @@
 /// <reference types="vite/client" />
-declare module "vitepress-plugin-nprogress";
+declare module "markdown-it-mermaid" {
+  const plugin: any;
+  export default plugin;
+}
+
+declare module "markdown-it-mermaid/*" {
+  const plugin: any;
+  export default plugin;
+}
