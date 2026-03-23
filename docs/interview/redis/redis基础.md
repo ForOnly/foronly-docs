@@ -30,14 +30,12 @@ Redis 的淘汰策略有八种，可分为三大类：
 
 1. 不淘汰：不删除任何 key，内存占满写入直接报错（OOM），使用缓存不可丢失场景
 2. 对设置了过期时间的 key 进行淘汰：
-
    - volatile-random：随机删除一个设置了过期时间的 key
    - volatile-ttl：优先删除 TTL（剩余过期时间）最短的 key
    - volatile-lru：从设置了过期时间的 key 中，淘汰最久未使用的（淘汰当前“最后一次访问时间最早”的元素，即最久未使用）
    - volatile-lfu：从设置了过期时间的 key 中，淘汰使用频率最低的
 
 3. 对所有 key 进行淘汰：
-
    - allkeys-random： 所有 key 中随机删除
    - allkeys-lru： 所有 key 中，淘汰最近最少使用
    - allkeys-lfu： 所有 key 中，淘汰使用频率最低

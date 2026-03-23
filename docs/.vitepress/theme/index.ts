@@ -33,7 +33,7 @@ export default {
     });
     watch(
       () => route.path,
-      () => nextTick(() => initZoom())
+      () => nextTick(() => initZoom()),
     );
   },
   css: {

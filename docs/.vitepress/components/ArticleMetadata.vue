@@ -31,7 +31,7 @@ function analyze() {
   document.querySelectorAll(".meta-des").forEach((v) => v.remove());
   const docDomContainer = window.document.querySelector("#VPContent");
   const imgs = docDomContainer?.querySelectorAll<HTMLImageElement>(
-    ".content-container .main img"
+    ".content-container .main img",
   );
   imageCount.value = imgs?.length || 0;
   const words =
@@ -48,7 +48,7 @@ onMounted(() => {
 
 <template>
   <div class="word">
-    <p  class="inline-flex items-center gap-1.5">
+    <p class="inline-flex items-center gap-1.5">
       <svg
         t="1724572866572"
         class="icon"

@@ -19,7 +19,6 @@ MySQL 5.0 之后默认是用 InnoDB。
 ### MySQL 中 InnoDB 和 MyISAM 的区别？
 
 1. InnoDB：
-
    - 支持外键
    - 支持行锁
    - 支持事务机制
@@ -27,7 +26,6 @@ MySQL 5.0 之后默认是用 InnoDB。
    - 支持崩溃恢复（Redo Log / Undo Log）
 
 2. MyISAM：
-
    - 只支持表级锁
    - 不支持事务
    - 不支持外键
@@ -153,7 +151,6 @@ MySQL 排序只有两种路径：
 1. 利用索引排序（最优）
    - 索引排序的条件:索引顺序一致;排序方向一致;不包含函数/表达式;WHERE + ORDER BY 联合使用
 2. filesort（额外排序）:一次读取,内存消耗大
-
    - 单路排序（Single-Pass）
 
      ```text
