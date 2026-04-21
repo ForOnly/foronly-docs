@@ -1,0 +1,14 @@
+services:
+  foronly-docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "18680:80"
+    restart: unless-stopped
+    networks:
+      - docs-network
+
+networks:
+  docs-network:
+    driver: bridge
