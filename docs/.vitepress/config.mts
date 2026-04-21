@@ -31,7 +31,7 @@ export default withMermaid({
   head: [["link", { rel: "icon", href: "/foronly-docs/favicon.ico" }]],
   description: "",
   cleanUrls: true,
-  lastUpdated: true,
+  lastUpdated: false, // 会需要git环境
   mermaid: {
     fontSize: 18,
     // 更多配置查看： https://mermaid.js.org/intro/syntax-reference.html
