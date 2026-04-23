@@ -13,7 +13,12 @@ const sidebar: DefaultTheme.Config["sidebar"] = {
       items: [{ text: "更新日志", link: "/changelog/changelog" }],
     },
   ],
-
+  "/real_interview/": [
+    {
+      text: "实战面经",
+      items: [{ text: "实战面经", link: "/real_interview/real_interview" }],
+    },
+  ],
   "/interview/": [
     {
       text: "Java",

@@ -15,6 +15,9 @@ hero:
       text: "📚 浏览文档指南"
       link: /guide/guide
     - theme: alt
+      text: "实战面经"
+      link: /real_interview/real_interview
+    - theme: alt
       text: "GitHub 仓库"
       link: https://github.com/ForOnly/foronly-docs
 

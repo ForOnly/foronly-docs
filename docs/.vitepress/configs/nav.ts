@@ -44,7 +44,7 @@ const nav: DefaultTheme.Config["nav"] = [
       },
     ],
   },
-
+  { text: "实战面经", link: "/real_interview/real_interview" },
   {
     text: "关于我",
     items: [
